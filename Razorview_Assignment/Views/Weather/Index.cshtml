@@ -1,0 +1,45 @@
+﻿@using Razorview_Assignment.Models
+@model IEnumerable<CityWeather>
+@{
+    string FahrenheitCSS(int TemperatureFahrenheit)
+    {
+        return TemperatureFahrenheit switch
+        {
+            (< 44) => "blue-back",
+            (>= 44) and (< 75) => "green-back",
+            (>= 75) => "orange-back"
+        };
+    }
+}
+<!DOCTYPE>
+<html>
+    <head>
+        <title>City Weather</title>
+        <meta charset="utf-8" />
+    <link href="~/StyleSheet_View.css" rel="stylesheet" />
+    </head>
+
+    <body>
+    <div class="page-content">
+        <h2>Weather Detail</h2>
+        <div class="flex">
+        @foreach (var citywea in Model)
+        {
+            <div class="w-30 box flex @FahrenheitCSS(citywea.TemperatureFahrenheit)">
+                <div class="flex-borderless w-100">
+                    <div class="w-50">
+                        <p>@citywea.CityName</p>
+                        <p>@citywea.DateAndTime.ToString("hh:mm tt")</p>
+                            <a href="~/weather/@citywea.CityUniqueCode">Detail</a>
+                    </div>
+                    <div class="w-50 border-left">
+                        <p>@citywea.TemperatureFahrenheit</p>
+                    </div>
+                </div>
+               
+            </div>
+        }
+        </div>
+        </div>
+    </body>
+</html>
